@@ -9,7 +9,7 @@ use App\Http\Controllers\BaseController as BaseController;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\RegistroPostRequest;
 
 
 
@@ -20,18 +20,10 @@ class RegistroController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function registro(Request $request)
+    public function registro(RegistroPostRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|max:20', 
-            'c_password' => 'required|same:password' 
-        ]);
- 
-        if ($validator->fails()) {
-            return $this->sendError('Error de validación.', $validator->errors()->all());
-        }
+
+        $request->validated();
 
         $input = $request->all();
        
@@ -51,10 +43,10 @@ class RegistroController extends BaseController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->plainTextToken; 
+            $success['token'] =  $user->createToken('Clicko')->plainTextToken; 
             $success['name'] =  $user->name;
    
-            return $this->sendResponse($success, 'Login exitoso');
+            return $this->sendResponse($success, 'Login con exito');
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
