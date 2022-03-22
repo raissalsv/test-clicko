@@ -67,6 +67,9 @@ Ruta DELETE Contactos <p>
 Para borrar un contacto hay que pasar su id para la url
 ![Screenshot 2022-03-22 at 13 05 10](https://user-images.githubusercontent.com/19510203/159478094-5b85ab33-8769-4e20-96df-7a55f5b4c304.png)
 
+Los tests se pueden ver usando el comando 
+    php artisan test
+
     
 Muchas gracias :)
 
