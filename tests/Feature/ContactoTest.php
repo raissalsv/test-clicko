@@ -9,12 +9,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class ContactoTest extends TestCase
 {
 
     use RefreshDatabase;
 
-    protected function autenticar()
+    public function autenticar()
     {
     
         $user = User::create([
@@ -50,19 +51,6 @@ class ContactoTest extends TestCase
         ]);
     }
 
-    public function test_buscar_contactos()
-    {
-        $token = $this->autenticar();
-       
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '. $token,
-        ])->json('GET', '/api/contactos');
-       
-        $response->assertStatus(200)->assertJson([
-            'success' => true,
-        ]);
-    }
-
     public function test_buscar_todos_contactos()
     {
         $token = $this->autenticar();
@@ -75,6 +63,31 @@ class ContactoTest extends TestCase
             'success' => true,
         ]);
     }
+
+    public function test_crear_user_metodo_no_permitido()
+    {
+        //intento de crear un usuario con metodo Put
+        $token = $this->autenticar();
+        
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer '. $token,
+        ])->json('PUT','api/contactos');
+
+        $response->assertStatus(405);
+    }
+
+    public function test_borrar_usuario_inexistente()
+    {
+        //intento de borrar un usuario que no existe
+        $token = $this->autenticar();
+        
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer '. $token,
+        ])->json('DELETE','api/contactos/10000');
+
+        $response->assertStatus(404);
+    }
+  
 
     
 }

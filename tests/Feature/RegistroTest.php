@@ -29,7 +29,7 @@ class RegistroTest extends TestCase
 
     public function testLogin()
     {
-        // Creating Users
+        // Creando permiso para logar
         $email = time().'@hotmail.com';
         User::create([
             'name' => 'Test',
@@ -37,21 +37,16 @@ class RegistroTest extends TestCase
             'password' =>  bcrypt('1234')
         ]);
 
-        // Simulated landing
         $response = $this->json('POST','/api/login',[
             'email' => $email,
             'password' => 1234,
         ]);
 
-        
-        // Determine whether the login is successful and receive token 
-        
+    
         $response->assertStatus(200)->assertJson([
             'success' => true,
         ]);
-        //$this->assertArrayHasKey('token',$response->json());
 
-        // Delete users
         User::where('email','test@gmail.com')->delete();
     } 
 

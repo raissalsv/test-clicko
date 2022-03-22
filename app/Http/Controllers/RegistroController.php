@@ -15,6 +15,7 @@ use App\Http\Requests\RegistroPostRequest;
 
 class RegistroController extends BaseController
 {
+    const PROYECTO = "Clicko"; 
     /**
      * Registro api
      *
@@ -43,7 +44,7 @@ class RegistroController extends BaseController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('Clicko')->plainTextToken; 
+            $success['token'] =  $user->createToken(self::PROYECTO)->plainTextToken; 
             $success['name'] =  $user->name;
    
             return $this->sendResponse($success, 'Login con exito');

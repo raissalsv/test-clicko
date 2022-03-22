@@ -19,7 +19,7 @@ class ContactoUpdateRequest extends FormRequest
             'apellido' => 'max:255',
             'email' => 'email:rfc,dns',
             'telefono' => 'numeric',
-            'dni' => 'unique:contactos|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i'
+            'dni' => 'regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i'
         ];
     }
 }

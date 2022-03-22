@@ -31,7 +31,6 @@ class ContactoController extends BaseController
     public function store(ContactoPostRequest $request)
     {
         $request->validated();
-       // dd($request->request->parameters);
         $post = Contacto::create($request->all());
 
         return $this->sendResponse(new ContactoResource($post), 'Usuário creado con exito');
